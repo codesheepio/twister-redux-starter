@@ -1,5 +1,4 @@
 import React, { Component, PropTypes } from 'react'
-import config from '../config'
 
 class NewTweet extends Component {
   constructor(props) {
@@ -10,7 +9,6 @@ class NewTweet extends Component {
     this.handleOnChange = this.handleOnChange.bind(this)
     this.handleKeyDown = this.handleKeyDown.bind(this)
     this.handleOnClick = this.handleOnClick.bind(this)
-    this.addTweet = this.addTweet.bind(this)
   }
 
   handleOnChange(event) {
@@ -24,37 +22,13 @@ class NewTweet extends Component {
       return
     }
     event.preventDefault()
-    this.addTweet({
-      name: this.props.name,
-      username: this.props.username,
-      tweetText: this.state.tweetText,
-    })
   }
 
-  handleOnClick() {
-    this.addTweet({
-      name: this.props.name,
-      username: this.props.username,
-      tweetText: this.state.tweetText,
+  handleOnClick(event) {
+    event.preventDefault()
+    this.setState({
+      tweetText: '',
     })
-  }
-
-  addTweet(tweet) {
-    fetch(`http://${config.api.host}:${config.api.port}/api/tweets`, {
-      method: 'POST',
-      headers: {
-        Accept: 'application/json',
-        'Content-Type': 'application/json',
-      },
-      mode: 'cors',
-      body: JSON.stringify(tweet),
-    }).then(response => response.json())
-      .then((data) => {
-        this.setState({
-          tweetText: '',
-        })
-        this.props.addToTweetList(data)
-      })
   }
 
   render() {
@@ -68,9 +42,9 @@ class NewTweet extends Component {
                 id="tweetText"
                 className="form-control"
                 placeholder="What's happening"
-                value={this.state.tweetText}
                 onChange={this.handleOnChange}
                 onKeyDown={this.handleKeyDown}
+                value={this.state.tweetText}
               />
             </div>
             <div className="col-sm-2">
@@ -91,7 +65,6 @@ class NewTweet extends Component {
 NewTweet.propTypes = {
   name: PropTypes.string.isRequired,
   username: PropTypes.string.isRequired,
-  addToTweetList: PropTypes.func.isRequired,
 }
 
 export default NewTweet

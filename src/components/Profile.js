@@ -4,11 +4,13 @@ import ProfileDetail from './ProfileDetail'
 import ProfileFollow from './ProfileFollow'
 
 const Profile = (props) => {
+  const toggleFollow = () => {}
+
   const showProfileFollow = props.isOwnProfile
     ? null
     : (<ProfileFollow
       isFollowing={props.isFollowing}
-      handleToggleFollow={props.toggleFollow}
+      handleToggleFollow={toggleFollow}
     />)
 
   return (
@@ -19,7 +21,7 @@ const Profile = (props) => {
         numFollowers={props.numFollowers}
         numFollowings={props.numFollowings}
       />
-      { showProfileFollow }
+      {showProfileFollow}
     </div>
   )
 }
@@ -32,7 +34,6 @@ Profile.propTypes = {
   numFollowings: PropTypes.number.isRequired,
   isFollowing: PropTypes.bool.isRequired,
   isOwnProfile: PropTypes.bool.isRequired,
-  toggleFollow: PropTypes.func.isRequired,
 }
 
 export default Profile
