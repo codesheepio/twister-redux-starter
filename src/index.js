@@ -10,12 +10,16 @@ import './styles/custom.scss'
 import './styles/main.scss'
 import App from './components/App'
 import rootReducer from './reducers'
+import { loadState, saveState } from './utils/localStorage'
+
+const preloadedState = loadState()
 
 const history = createBrowserHistory()
 /* eslint-disable no-underscore-dangle,comma-dangle */
 const composeEnhancers = window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__ || compose
 const store = createStore(
   connectRouter(history)(rootReducer),
+  preloadedState,
   composeEnhancers(
     applyMiddleware(
       routerMiddleware(history),
@@ -24,6 +28,13 @@ const store = createStore(
   )
 )
 /* eslint-enable */
+
+store.subscribe(() => {
+  saveState({
+    auth: store.getState().auth,
+  })
+})
+
 
 const render = (Component) => {
   ReactDOM.render(
