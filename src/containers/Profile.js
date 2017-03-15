@@ -2,6 +2,7 @@ import { connect } from 'react-redux'
 import { matchPath } from 'react-router'
 import Profile from '../components/Profile'
 import { fetchProfile } from '../actions/profile'
+import { fetchFollowStatus } from '../actions/follow'
 
 const mapStateToProps = (state) => {
   const match = matchPath(
@@ -23,8 +24,10 @@ const mapStateToProps = (state) => {
     numTweets: state.profile.numTweets,
     numFollowers: state.profile.numFollowers,
     numFollowings: state.profile.numFollowings,
+    isFollowing: state.profile.isFollowing,
     isOwnProfile,
+    loggingInUsername: state.auth.username,
   }
 }
 
-export default connect(mapStateToProps, { fetchProfile })(Profile)
+export default connect(mapStateToProps, { fetchProfile, fetchFollowStatus })(Profile)

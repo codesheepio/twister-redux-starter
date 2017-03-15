@@ -6,11 +6,17 @@ import ProfileFollow from './ProfileFollow'
 class Profile extends Component {
   componentDidMount() {
     this.props.fetchProfile(this.props.toFetchedUsername)
+    if (!this.props.isOwnProfile) {
+      this.props.fetchFollowStatus(this.props.loggingInUsername, this.props.toFetchedUsername)
+    }
   }
 
   componentWillReceiveProps(nextProps) {
     if (this.props.toFetchedUsername !== nextProps.toFetchedUsername) {
       this.props.fetchProfile(nextProps.toFetchedUsername)
+      if (!this.props.isOwnProfile) {
+        this.props.fetchFollowStatus(nextProps.loggingInUsername, nextProps.toFetchedUsername)
+      }
     }
   }
 
@@ -50,6 +56,12 @@ Profile.propTypes = {
   isFollowing: PropTypes.bool.isRequired,
   isOwnProfile: PropTypes.bool.isRequired,
   fetchProfile: PropTypes.func.isRequired,
+  fetchFollowStatus: PropTypes.func.isRequired,
+  loggingInUsername: PropTypes.string,
+}
+
+Profile.defaultProps = {
+  loggingInUsername: '',
 }
 
 export default Profile
