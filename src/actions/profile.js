@@ -23,7 +23,6 @@ const fetchProfileSuccess = ({
 })
 
 const fetchProfile = username => (dispatch) => {
-  console.log('username', username)
   const uri = `http://${host}:${port}/api/TwisterUsers/${username}`
 
   fetch(uri, { mode: 'cors' })
