@@ -4,6 +4,11 @@ import ProfileDetail from './ProfileDetail'
 import ProfileFollow from './ProfileFollow'
 
 class Profile extends Component {
+  constructor(props) {
+    super(props)
+    this.toggleFollow = this.toggleFollow.bind(this)
+  }
+
   componentDidMount() {
     this.props.fetchProfile(this.props.toFetchedUsername)
     if (!this.props.isOwnProfile) {
@@ -20,7 +25,14 @@ class Profile extends Component {
     }
   }
 
-  toggleFollow() {}
+  toggleFollow() {
+    this.props.toggleFollowStatus(
+      this.props.loggingInUsername,
+      this.props.username,
+      !this.props.isFollowing,
+      this.props.token,
+    )
+  }
 
   render() {
     const showProfileFollow = this.props.isOwnProfile
@@ -58,10 +70,13 @@ Profile.propTypes = {
   fetchProfile: PropTypes.func.isRequired,
   fetchFollowStatus: PropTypes.func.isRequired,
   loggingInUsername: PropTypes.string,
+  token: PropTypes.string,
+  toggleFollowStatus: PropTypes.func.isRequired,
 }
 
 Profile.defaultProps = {
   loggingInUsername: '',
+  token: '',
 }
 
 export default Profile
