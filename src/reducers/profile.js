@@ -1,4 +1,4 @@
-import { PROFILE_FETCH_SUCCESS } from '../actions/types'
+import { PROFILE_FETCH_SUCCESS, TWEET_POST_SUCCESS } from '../actions/types'
 
 const initialState = {
   name: '',
@@ -19,6 +19,12 @@ const profileReducer = (state = initialState, action) => {
         numFollowers: action.payload.numFollowers,
         numFollowings: action.payload.numFollowings,
         numTweets: action.payload.numTweets,
+      }
+    }
+    case TWEET_POST_SUCCESS: {
+      return {
+        ...state,
+        numTweets: state.numTweets + 1,
       }
     }
     default: {
