@@ -19,7 +19,7 @@ class Profile extends Component {
   componentWillReceiveProps(nextProps) {
     if (this.props.toFetchedUsername !== nextProps.toFetchedUsername) {
       this.props.fetchProfile(nextProps.toFetchedUsername)
-      if (!this.props.isOwnProfile) {
+      if (!nextProps.isOwnProfile) {
         this.props.fetchFollowStatus(nextProps.loggingInUsername, nextProps.toFetchedUsername)
       }
     }
