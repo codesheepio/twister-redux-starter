@@ -1,5 +1,5 @@
 import React, { PropTypes } from 'react'
-import NewTweet from './NewTweet'
+import NewTweet from '../containers/NewTweet'
 import TweetList from '../containers/TweetList'
 
 const MainPanel = ({ enableTweet }) => (
