@@ -22,6 +22,25 @@ const fetchTweets = username => (dispatch) => {
   .catch(err => console.error(err))
 }
 
+const fetchHomeFeed = token => (dispatch) => {
+  const uri = `http://${host}:${port}/api/Tweets/homefeed`
+
+  fetch(uri, {
+    headers: {
+      Accept: 'application/json',
+      Authorization: token,
+    },
+  })
+  .then((response) => {
+    if (!response.ok) {
+      throw Error(response.statusText)
+    }
+    return response.json()
+  })
+  .then(tweets => dispatch(fetchTweetsSuccess(tweets)))
+  .catch(err => console.error(err))
+}
+
 const postTweetSuccess = (name, username, tweetText, timestamp) => ({
   type: TWEET_POST_SUCCESS,
   payload: {
@@ -63,5 +82,6 @@ const postTweet = (name, username, tweetText, token) => (dispatch) => {
 
 export {
   fetchTweets,
+  fetchHomeFeed,
   postTweet,
 }
