@@ -22,10 +22,17 @@ class NewTweet extends Component {
       return
     }
     event.preventDefault()
+    this.addTweet()
   }
 
   handleOnClick(event) {
     event.preventDefault()
+    this.addTweet()
+  }
+
+  addTweet() {
+    const { name, username, token } = this.props
+    this.props.postTweet(name, username, this.state.tweetText, token)
     this.setState({
       tweetText: '',
     })
@@ -65,6 +72,12 @@ class NewTweet extends Component {
 NewTweet.propTypes = {
   name: PropTypes.string.isRequired,
   username: PropTypes.string.isRequired,
+  token: PropTypes.string,
+  postTweet: PropTypes.func.isRequired,
+}
+
+NewTweet.defaultProps = {
+  token: '',
 }
 
 export default NewTweet
