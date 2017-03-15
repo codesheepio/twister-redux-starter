@@ -1,5 +1,5 @@
 import React, { PropTypes } from 'react'
-import NavBar from '../components/NavBar'
+import NavBar from '../containers/NavBar'
 
 const MainLayout = props => (
   <div>
