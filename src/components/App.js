@@ -4,6 +4,7 @@ import { ConnectedRouter } from 'connected-react-router'
 import MainLayout from '../layouts/MainLayout'
 import BodyContainer from './BodyContainer'
 import LoginForm from '../containers/LoginForm'
+import SignupForm from '../containers/SignupForm'
 
 const App = ({ history }) => (
   <ConnectedRouter history={history}>
@@ -11,6 +12,7 @@ const App = ({ history }) => (
       <Switch>
         <Route exact path="/" component={BodyContainer} />
         <Route path="/login" component={LoginForm} />
+        <Route path="/signup" component={SignupForm} />
         <Route path="/:ownerUsername" component={BodyContainer} />
       </Switch>
     </MainLayout>
