@@ -1,7 +1,7 @@
 import { connect } from 'react-redux'
 import { matchPath } from 'react-router'
 import TweetList from '../components/TweetList'
-import { fetchTweets } from '../actions/tweet'
+import { fetchTweets, fetchHomeFeed } from '../actions/tweet'
 
 const mapStateToProps = (state) => {
   const match = matchPath(
@@ -12,11 +12,8 @@ const mapStateToProps = (state) => {
   return {
     tweets: state.tweets,
     ownerUsername: match ? match.params.ownerUsername : null,
+    token: state.auth.token,
   }
 }
 
-const mapDispatchToProps = dispatch => ({
-  fetchTweets: username => dispatch(fetchTweets(username)),
-})
-
-export default connect(mapStateToProps, mapDispatchToProps)(TweetList)
+export default connect(mapStateToProps, { fetchTweets, fetchHomeFeed })(TweetList)

@@ -3,16 +3,20 @@ import Tweet from './Tweet'
 
 class TweetList extends React.Component {
   componentDidMount() {
-    const username = this.props.ownerUsername || 'kaizerwing'
-
-    this.props.fetchTweets(username)
+    if (this.props.ownerUsername) {
+      this.props.fetchTweets(this.props.ownerUsername)
+    } else {
+      this.props.fetchHomeFeed(this.props.token)
+    }
   }
 
   componentWillReceiveProps(nextProps) {
     if (this.props.ownerUsername !== nextProps.ownerUsername) {
-      const username = nextProps.ownerUsername || 'kaizerwing'
-
-      this.props.fetchTweets(username)
+      if (nextProps.ownerUsername) {
+        this.props.fetchTweets(nextProps.ownerUsername)
+      } else {
+        this.props.fetchHomeFeed(nextProps.token)
+      }
     }
   }
 
@@ -29,11 +33,14 @@ TweetList.propTypes = {
   tweets: PropTypes.arrayOf(PropTypes.object),
   ownerUsername: PropTypes.string,
   fetchTweets: PropTypes.func.isRequired,
+  fetchHomeFeed: PropTypes.func.isRequired,
+  token: PropTypes.string,
 }
 
 TweetList.defaultProps = {
   tweets: [],
   ownerUsername: '',
+  token: '',
 }
 
 export default TweetList
