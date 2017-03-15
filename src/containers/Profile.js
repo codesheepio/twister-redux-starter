@@ -14,6 +14,8 @@ const mapStateToProps = (state) => {
     ? match.params.ownerUsername
     : state.auth.username
 
+  const isOwnProfile = !match || (match.params.ownerUsername === state.auth.username)
+
   return {
     toFetchedUsername: ownerUsername,
     name: state.profile.name,
@@ -21,6 +23,7 @@ const mapStateToProps = (state) => {
     numTweets: state.profile.numTweets,
     numFollowers: state.profile.numFollowers,
     numFollowings: state.profile.numFollowings,
+    isOwnProfile,
   }
 }
 
