@@ -1,32 +1,47 @@
-import React, { PropTypes } from 'react'
+import React, { Component, PropTypes } from 'react'
 import ProfileHeader from './ProfileHeader'
 import ProfileDetail from './ProfileDetail'
 import ProfileFollow from './ProfileFollow'
 
-const Profile = (props) => {
-  const toggleFollow = () => {}
+class Profile extends Component {
+  componentDidMount() {
+    this.props.fetchProfile(this.props.toFetchedUsername)
+  }
 
-  const showProfileFollow = props.isOwnProfile
-    ? null
-    : (<ProfileFollow
-      isFollowing={props.isFollowing}
-      handleToggleFollow={toggleFollow}
-    />)
+  componentWillReceiveProps(nextProps) {
+    if (this.props.toFetchedUsername !== nextProps.toFetchedUsername) {
+      this.props.fetchProfile(nextProps.toFetchedUsername)
+    }
+  }
 
-  return (
-    <div className="profile">
-      <ProfileHeader name={props.name} username={props.username} />
-      <ProfileDetail
-        numTweets={props.numTweets}
-        numFollowers={props.numFollowers}
-        numFollowings={props.numFollowings}
-      />
-      {showProfileFollow}
-    </div>
-  )
+  toggleFollow() {}
+
+  render() {
+    const showProfileFollow = this.props.isOwnProfile
+      ? null
+      : (
+        <ProfileFollow
+          isFollowing={this.props.isFollowing}
+          handleToggleFollow={this.toggleFollow}
+        />
+        )
+
+    return (
+      <div className="profile">
+        <ProfileHeader name={this.props.name} username={this.props.username} />
+        <ProfileDetail
+          numTweets={this.props.numTweets}
+          numFollowers={this.props.numFollowers}
+          numFollowings={this.props.numFollowings}
+        />
+        {showProfileFollow}
+      </div>
+    )
+  }
 }
 
 Profile.propTypes = {
+  toFetchedUsername: PropTypes.string.isRequired,
   name: PropTypes.string.isRequired,
   username: PropTypes.string.isRequired,
   numTweets: PropTypes.number.isRequired,
@@ -34,6 +49,7 @@ Profile.propTypes = {
   numFollowings: PropTypes.number.isRequired,
   isFollowing: PropTypes.bool.isRequired,
   isOwnProfile: PropTypes.bool.isRequired,
+  fetchProfile: PropTypes.func.isRequired,
 }
 
 export default Profile
